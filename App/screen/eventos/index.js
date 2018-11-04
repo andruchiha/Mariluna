@@ -1,171 +1,88 @@
 import React, { Component } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 
-import { StyleSheet, Text, View, PixelRatio, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
-
-import ImagePicker from 'react-native-image-picker';
-
-import RNFetchBlob from 'rn-fetch-blob';
-
-export default class Project extends Component {
-
-  constructor() {
-
-    super();
+class GeolocationExample extends Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
-
-      ImageSource: null,
-
-      data: null,
-
-      Image_TAG: ''
-
-    }
-  }
-
-  selectPhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true
-      }
+      latitude: null,
+      longitude: null,
+      error: null,
+      created_at: new Date(),
     };
+  }
 
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled photo picker');
-      }
-      else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source = { uri: response.uri };
-
+  componentDidMount() {
+    this.watchId = navigator.geolocation.watchPosition(
+      (position) => {
         this.setState({
-
-          ImageSource: source,
-          data: response.data
-
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
         });
-      }
-    });
-  }
-
-  uploadImageToServer = () => {
-
-    RNFetchBlob.fetch('POST', 'http://192.168.0.16/conex/upload_image.php', {
-      Authorization: "Bearer access-token",
-      otherHeader: "foo",
-      'Content-Type': 'multipart/form-data',
-    }, [
-        { name: 'image', filename: 'image.png', type: 'image/png', data: this.state.data },
-        { name: 'image_tag', data: this.state.Image_TAG }
-      ]).then((resp) => {
-
-        var tempMSG = resp.data;
-
-        tempMSG = tempMSG.replace(/^"|"$/g, '');
-
-        Alert.alert(tempMSG);
-
-      }).catch((err) => {
-        // ...
-      })
-
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-
-        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-
-          <View style={styles.ImageContainer}>
-
-            {this.state.ImageSource === null ? <Text>Select a Photo</Text> :
-              <Image style={styles.ImageContainer} source={this.state.ImageSource} />
-            }
-
-          </View>
-
-        </TouchableOpacity>
-
-
-        <TextInput
-
-          placeholder="Enter Image Name "
-
-          onChangeText={data => this.setState({ Image_TAG: data })}
-
-          underlineColorAndroid='transparent'
-
-          style={styles.TextInputStyle}
-        />
-
-
-        <TouchableOpacity onPress={this.uploadImageToServer} activeOpacity={0.6} style={styles.button} >
-
-          <Text style={styles.TextStyle}> UPLOAD IMAGE TO SERVER </Text>
-
-        </TouchableOpacity>
-
-      </View>
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
     );
   }
 
-}
-
-const styles = StyleSheet.create({
-
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#FFF8E1',
-    paddingTop: 20
-  },
-
-  ImageContainer: {
-    borderRadius: 10,
-    width: 250,
-    height: 250,
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#CDDC39',
-
-  },
-
-  TextInputStyle: {
-
-    textAlign: 'center',
-    height: 40,
-    width: '80%',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#028b53',
-    marginTop: 20
-  },
-
-  button: {
-
-    width: '80%',
-    backgroundColor: '#00BCD4',
-    borderRadius: 7,
-    marginTop: 20
-  },
-
-  TextStyle: {
-    color: '#fff',
-    textAlign: 'center',
-    padding: 10
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
   }
 
-});
+
+  userRegister = () =>{
+		//alert('ok'); // version 0.48
+
+		const {latitude} = this.state;
+		const {longitude} = this.state;
+	//	const {userPassword} = this.state;
+  //  const {gender} = this.state;
+    const {created_at} = this.state;
+
+
+		fetch('http://192.168.0.16/conex/registerloca.php', {
+			method: 'post',
+			header:{
+				'Accept': 'application/json',
+				'Content-type': 'application/json'
+			},
+			body:JSON.stringify({
+				latitude: latitude,
+        longitude: longitude,
+			//	email: userEmail,
+			//	password: userPassword,
+      //  gender:gender,
+        created_at:created_at,
+			})
+
+		})
+		.then((response) => response.json())
+			.then((responseJson) =>{
+				alert("Ubicacion Registrado con exito");
+        this.props.navigation.navigate('home');
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
+
+	}
+
+
+  render() {
+    return (
+      <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Latitude: {this.state.latitude}</Text>
+        <Text>Longitude: {this.state.longitude}</Text>
+        {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+
+        <TouchableOpacity onPress={this.userRegister}>
+          <Text >Enviar ubicacion</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+export default GeolocationExample;

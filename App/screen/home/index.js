@@ -28,21 +28,21 @@ static navigationOptions= ({navigation}) =>({
 		<TouchableOpacity
 		onPress={()=> navigate('Register')}
 		style={styles.btn2}>
-		<Text style={styles.btnText}>Registro</Text>
+		<Text style={styles.btnText}>ver incidentes</Text>
 		</TouchableOpacity>
 
 
 		<TouchableOpacity
 		onPress={()=> navigate('Eventos')}
 		style={styles.btn3}>
-		<Text style={styles.btnText}>Eventos</Text>
+		<Text style={styles.btnText}>Enviar ubicacion</Text>
 		</TouchableOpacity>
 
 
 		<TouchableOpacity
 		onPress={()=> navigate('Upload')}
 		style={styles.btn2}>
-		<Text style={styles.btnText}>Subir foto</Text>
+		<Text style={styles.btnText}>Enviar incidente</Text>
 		</TouchableOpacity>
 
 

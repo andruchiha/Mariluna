@@ -103,7 +103,7 @@ export default class register extends Component {
     const {created_at} = this.state;
 
 
-		fetch('http://192.168.0.16/conex/register.php', {
+		fetch('http://192.168.100.197/conex/register.php', {
 			method: 'post',
 			header:{
 				'Accept': 'application/json',

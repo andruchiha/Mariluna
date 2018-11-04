@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {View,Text,StyleSheet,TextInput,TouchableOpacity,Image} from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
+import { Dropdown } from 'react-native-material-dropdown';
 
 const options={
     title:'select a photo',
@@ -23,11 +24,49 @@ class InputUsers extends Component{
             TextInputEmail:'',
             TextInputPhoneNumber:'',
             iamgeSource: null,
+            data: [
+      				{
+      					value: 'Computadoras encendidas',
+      				},
+      				{
+      					value: 'Puerta Abierta',
+      				},
+              {
+      					value: 'llaves perdidas',
+      				},
+      				{
+      					value: 'Retraso de personal',
+      				},
+              {
+      					value: 'alarmas desactivadas',
+      				},
+      				{
+      					value: 'personal no reconocido',
+      				},
+              {
+      					value: 'Agresion',
+      				},
+      				{
+      					value: 'Aulas desordenadas',
+      				},
+              {
+      					value: 'No hay empleados',
+      				},
+      				{
+      					value: 'No llego compa;ero',
+      				},
+              {
+      					value: 'Fugas de gas',
+      				},
+      				{
+      					value: 'Puerta esta cerrada',
+      				},
+      			],
         }
     }
 
     selectPhoto(){
-        ImagePicker.showImagePicker(options, (response) => {
+        ImagePicker.launchCamera(options, (response) => {
             console.log('Response = ', response);
 
             if (response.didCancel) {
@@ -64,10 +103,10 @@ formData.append('phone_number', TextInputPhoneNumber);
 const uriPart = iamgeSource.uri.split('.');
 const fileExtension = uriPart[uriPart.length - 1];
 
-formData.append('photo', {
+formData.append('iamgeSource', {
     uri: iamgeSource.uri,
-    name: 'photo',
-    type: 'image/jpeg'
+    name: 'iamgeSource',
+    type: 'image/jpeg',
 });
 
 //API that use fetch to input data to database via backend php script
@@ -83,7 +122,7 @@ fetch('http://192.168.0.16/conex/insert.php',{
   .then((responseJson) => {
    // return responseJson
      alert(responseJson);
-     this.props.navigation.navigate('seconde');
+     this.props.navigation.navigate('home');
     })
     .catch((error) => {
         console.error(error);
@@ -93,9 +132,6 @@ fetch('http://192.168.0.16/conex/insert.php',{
 }
 
 
-        ViewUsersList = ()=>{
-            this.props.navigation.navigate('seconde');
-        }
 
 
     render(){
@@ -103,43 +139,36 @@ fetch('http://192.168.0.16/conex/insert.php',{
             <View style ={styles.container}>
                 <TextInput
                 // value = {this.TextInputName}
-                 placeholder = 'Enter Name'
+                 placeholder = 'Descripcion del incidente'
                  onChangeText = {TextInputValue=>this.setState({TextInputName:TextInputValue}) }
                  underlineColorAndroid = 'transparent'
                  style = {styles.TextInputStyle}
                 />
-                <TextInput
-                 //value = {this.TextInputEmail}
-                 placeholder = 'Enter E-mail'
-                 onChangeText = {TextInputValue=>this.setState({TextInputEmail:TextInputValue}) }
-                 underlineColorAndroid = 'transparent'
-                 style = {styles.TextInputStyle2}
-                />
 
-                <TextInput
-                 //value = {this.TextInputPhoneNumber}
-                 placeholder = 'Enter Phone Number'
-                 onChangeText = {TextInputValue=>this.setState({TextInputPhoneNumber:TextInputValue}) }
-                 underlineColorAndroid = 'transparent'
-                 style = {styles.TextInputStyle2}
-                />
+                <View style={styles.textInput2}>
+                  <Dropdown
+                    label="Seleccion incidente"
+                    data={this.state.data}
+                    onChangeText= {TextInputValue=>this.setState({TextInputEmail:TextInputValue}) }
+                  />
+                </View>
+
+
 
                 <Image style={styles.image}
                     source={this.state.iamgeSource != null ? this.state.iamgeSource : require('./image/blogSix.png')}
                 />
 
                 <TouchableOpacity style = {styles.TouchableOpacityStyle} onPress={this.selectPhoto.bind(this)}>
-                    <Text style = {styles.TextStyle}>Select Photo</Text>
+                    <Text style = {styles.TextStyle}>Seleccione la foto</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity activeOpacity = {.4} style = {styles.TouchableOpacityStyle} onPress={this.InsertUser}>
-                    <Text style = {styles.TextStyle}>Save</Text>
+                    <Text style = {styles.TextStyle}>Enviar incidente</Text>
                 </TouchableOpacity>
 
 
-                <TouchableOpacity activeOpacity = {.4} style = {styles.TouchableOpacityStyle} onPress={this.ViewUsersList}>
-                    <Text style = {styles.TextStyle}>View Users</Text>
-                </TouchableOpacity>
+
             </View>
         )
     }
@@ -201,11 +230,26 @@ const styles = StyleSheet.create ({
         textAlign:'center'
     },
 
+    textInput2: {
+      textAlign:'center',
+      marginBottom:7,
+      marginTop:20,
+      width:'90%',
+      height:40,
+      borderWidth:1,
+      borderRadius:5,
+      borderColor:'#FF5722',
+      paddingBottom:25,
+
+    },
+
     image:{
         width:200,
         height:200,
         marginTop:30
     }
+
+
 
 });
 

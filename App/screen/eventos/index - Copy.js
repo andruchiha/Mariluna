@@ -1,111 +1,61 @@
-import React, {  PropTypes, Component } from 'react';
+import React, { Component } from "react";
 import {
-  AppRegistry,
+  Platform,
   StyleSheet,
   Text,
-  View,Button,TextInput,TouchableOpacity,
-  StatusBar,
-  Platform,
-  Image,
-  ImageBackground,
-  ScrollView,
-  BackHandler,
-  I18nManager
-} from 'react-native';
-import {
-  Container,
-  Content,
-  Right,
-  Form,
-  Item,
-  Icon,
-  Label,
-  Input,
-  Header,
-  Left,
-  Body,
-  Title
-} from "native-base";
-import ImagePicker from 'react-native-image-picker';
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+  View,
+  Alert,
+  TouchableOpacity
+} from "react-native";
 
-// Screen Styles
-import styles from "./styles";
-import { Fonts, Metrics, Colors } from "../../Themes/";
+export default class App extends Component {
+  state = {
+    location: null,
+    created_at: new Date(),
+  };
 
+  findCoordinates = () => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const location = JSON.stringify(position);
 
-const options = {
-  title: 'Select Avatar',
-  takePhotoButtonTitle:'Take a photo',
-  chooseFromLibraryButtonTitle:'Choose from gallery',
-  quality: 1
-};
+        this.setState({ location });
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  };
 
 
 
-export default class register extends Component {
-
-  constructor(){
-		super()
-		this.state={
-      imageSource: null,
-      data:null
-
-		}
-	}
-
-
-  selectPhoto (){
-    ImagePicker.showImagePicker(options, (response) => {
-  console.log('Response = ', response);
-
-  if (response.didCancel) {
-    console.log('User cancelled image picker');
-  }
-  else if (response.error) {
-    console.log('ImagePicker Error: ', response.error);
-  }
-  else {
-    let source = { uri: response.uri };
-    this.setState({
-      imageSource: source,
-      data: response.data
-    });
-  }
-});
-
-  }
-
-  static navigationOptions= ({navigation}) =>({
-  			title:'App Apolys registro',
-  		  header: null,
-  	});
-
-
-	/*userRegister = () =>{
+  userRegister = () =>{
 		//alert('ok'); // version 0.48
 
-		const {userName} = this.state;
-		const {userEmail} = this.state;
-		const {userPassword} = this.state;
+		const {location} = this.state;
+		const {created_at} = this.state;
+	//	const {userPassword} = this.state;
+  //  const {gender} = this.state;
+  //  const {created_at} = this.state;
 
 
-		fetch('https://putitashd.000webhostapp.com/conex/register.php', {
+		fetch('http://192.168.0.16/conex/registerloca.php', {
 			method: 'post',
 			header:{
 				'Accept': 'application/json',
 				'Content-type': 'application/json'
 			},
 			body:JSON.stringify({
-				name: userName,
-				email: userEmail,
-				password: userPassword,
+				location: location,
+			//	email: userEmail,
+			//	password: userPassword,
+      //  gender:gender,
+        created_at:created_at,
 			})
 
 		})
 		.then((response) => response.json())
 			.then((responseJson) =>{
-				alert("Usuario registrado con exito");
+				alert("Ubicacion Registrado con exito");
         this.props.navigation.navigate('home');
 			})
 			.catch((error)=>{
@@ -113,126 +63,42 @@ export default class register extends Component {
 			});
 
 	}
-*/
 
 
 
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={this.findCoordinates}>
+          <Text style={styles.welcome}>Mi ubicacion?</Text>
+          <Text onChangeText= {location => this.setState({location})}>Estoy en: {this.state.location}</Text>
+        </TouchableOpacity>
 
-
-/*
-  uploadPhoto(){
-
-
-    RNFetchBlob.fetch('POST', 'https://putitashd.000webhostapp.com/conex/upload.php', {
-    Authorization : "Bearer access-token",
-    otherHeader : "foo",
-    'Content-Type' : 'multipart/form-data',
-  }, [
-
-    { name : 'image', filename : 'image.png', type:'image/png', data: this.state.data},
-
-  ]).then((resp) => {
-    // ...
-  }).catch((err) => {
-    // ...
-  })
-
-
+        <TouchableOpacity onPress={this.userRegister}>
+          <Text style={styles.welcome}>Evniar ubicacion</Text>
+          <Text onChangeText= {location => this.setState({location})}>{this.state.location}</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
-*/
-
-
-
-uploadPhoto() {
-    const { navigation, user } = this.props;
-
-    const obj = {
-      uploadUrl: 'http://192.168.0.16/conex/upload.php',
-      method: 'POST', // default 'POST',support 'POST' and 'PUT'
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'jwt ${user.token}',
-      },
-      files: [
-        {
-          name: 'image',
-          filename: 'image.png',
-          filetype: 'image/jpeg',
-          data: this.state.data,
-        },
-      ],
-      fields: {
-      },
-    };
-
-
-    console.log(obj);
-  }
-
-
-
-
-
-
-
- render() {
-   StatusBar.setBarStyle("light-content", true);
-
-   if (Platform.OS === "android") {
-     StatusBar.setBackgroundColor("transparent", true);
-     StatusBar.setTranslucent(true);
-   }
-
-   const imageUri =
-     "https://antiqueruby.aliansoftware.net//Images/signup/title_pic_s03.png";
-   return (
-     <Container style={styles.container}>
-
-             <TouchableOpacity
-               style={styles.backArrow}
-               onPress={() => this.props.navigation.navigate('Home')}
-             >
-               <FontAwesome
-                 name={I18nManager.isRTL ? "angle-right" : "angle-left"}
-                 size={30}
-                 color="white"
-               />
-             </TouchableOpacity>
-
-
-       <ScrollView>
-
-
-       <Image style={styles.image}
-         source={this.state.imageSource != null ? this.state.imageSource :
-         require('./image/blogSix.png')}
-       />
-
-
-          <TouchableOpacity style={styles.buttonSignUp} onPress={this.selectPhoto.bind(this)}>
-            <Text style={styles.textWhite}>Select</Text>
-          </TouchableOpacity>
-
-         <TouchableOpacity
-           style={styles.buttonSignUp}
-           onPress={this.userRegister}
-         >
-           <Text style={styles.textWhite} onPress={this.uploadPhoto.bind(this)}>Subir</Text>
-         </TouchableOpacity>
-
-         <View style={styles.tandcView}>
-
-
-
-
-         </View>
-       </ScrollView>
-     </Container>
-   );
- }
-
-
 }
 
 
-AppRegistry.registerComponent('eventos', () => eventos);
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10
+  },
+  instructions: {
+    textAlign: "center",
+    color: "#333333",
+    marginBottom: 5
+  }
+});
