@@ -42,7 +42,7 @@ class GeolocationExample extends Component {
     const {created_at} = this.state;
 
 
-		fetch('http://192.168.0.16/conex/registerloca.php', {
+		fetch('http://192.168.1.109/conex/registerloca.php', {
 			method: 'post',
 			header:{
 				'Accept': 'application/json',

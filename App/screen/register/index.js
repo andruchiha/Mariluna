@@ -103,7 +103,7 @@ export default class register extends Component {
     const {created_at} = this.state;
 
 
-		fetch('http://192.168.100.197/conex/register.php', {
+		fetch('https://putitashd.000webhostapp.com/conex/register.php', {
 			method: 'post',
 			header:{
 				'Accept': 'application/json',
@@ -167,9 +167,11 @@ export default class register extends Component {
 
 
        <ScrollView>
+       <Text style={styles.textWhite2}>Listar incidentes</Text>
+
          <TextInput
            style={styles.textInput}
-           placeholder="Descripcion del incidente"
+           placeholder=" Fecha y Descripcion del incidente"
            placeholderTextColor={Colors.shadows}
            underlineColorAndroid="transparent"
            autoCapitalize="none"
@@ -181,22 +183,7 @@ export default class register extends Component {
          />
 
 
-         <View style={styles.textInput2}>
-           <Dropdown
-             label="Seleccion incidente"
-             data={this.state.data}
-             textColor={'#959595'}
-             onChangeText= {gender => this.setState({gender})}
-           />
-         </View>
 
-
-         <TouchableOpacity
-           style={styles.buttonSignUp}
-           onPress={this.userRegister}
-         >
-           <Text style={styles.textWhite}>Enviar incidente</Text>
-         </TouchableOpacity>
 
 
 

@@ -1,4 +1,7 @@
-#Tue Oct 23 19:46:24 COT 2018
-base.0=C\:\\Users\\ActivaUP\\Desktop\\app guardias - Copy (3)\\appguardias\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+#Sat Nov 10 10:00:23 COT 2018
+base.0=C\:\\Users\\ActivaUP\\Desktop\\app guardias - respaldo\\appguardias\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.1=classes2.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=C\:\\Users\\ActivaUP\\Desktop\\app guardias - respaldo\\appguardias\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0

@@ -1,170 +1,119 @@
 import React, { Component } from 'react';
-import { Text, View, Image,  Keyboard, StyleSheet, AppRegistry, TextInput, TouchableOpacity, ImageBackground, Platform, StatusBar, BackHandler, I18nManager } from 'react-native';
-import { Container, Button, Icon, Right, Item, Input, Header, Left, Body, Title } from 'native-base';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import CheckBox from 'react-native-check-box';
-
-// Screen Styles
-import styles from './styles';
-import { Images } from '../../Themes/';
-
-//import { StackNavigator } from 'react-navigation';
+import { AppRegistry,View,Text,StyleSheet
+,Button,TouchableOpacity,StatusBar,Image } from 'react-native';
 
 
-export default class login extends Component {
+export default class home extends Component{
+
+	static navigationOptions= ({navigation}) =>({
+				title:'App Apolys inicio',
+			  header: null,
+		});
+
+	constructor(props) {
+    super(props);
+
+    this.state = {
+      latitude: null,
+      longitude: null,
+      error: null,
+      created_at: new Date(),
+    };
+  }
 
 
 
-  static navigationOptions= ({navigation}) =>({
-  			title:'App Apolys ingresar',
-  		  header: null,
-  	});
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            userEmail: '',
-            userPassword: ''
-        }
-    }
-
-    login = () => {
-        const { userEmail, userPassword } = this.state;
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (userEmail == "") {
-            //alert("Please enter Email address");
-            this.setState({ email: 'Ingrese un correo' })
-
-        } else if (reg.test(userEmail) === false) {
-            //alert("Email is Not Correct");
-            this.setState({ email: 'El Correo no es correcto' })
-            return false;
-        } else if (userPassword == "") {
-            this.setState({ email: 'Ingrese la contraseña' })
-        } else {
-            fetch('https://putitashd.000webhostapp.com/conex/login.php', {
-                    method: 'post',
-                    header: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        // we will pass our input data to server
-                        email: userEmail,
-                        password: userPassword,
-                    })
-
-                })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    if (responseJson == "ok") {
-                        // redirect to profile page
-                        alert("Bienvenido al sistema");
-                        this.props.navigation.navigate("Profile");
-                    } else {
-                        alert("Error al ingresar al sistema");
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-
-
-        Keyboard.dismiss();
-    }
-
-    /*render() {
-    return (
-	<View style={styles.container}>
-	<Text style={{padding:10,margin:10,color:'red'}}>{this.state.email}</Text>
-
-	<TextInput
-	placeholder="Enter Email"
-	style={{width:200, margin:10}}
-	onChangeText={userEmail => this.setState({userEmail})}
-	/>
-
-	<TextInput
-	placeholder="Enter Password"
-	style={{width:200, margin:10}}
-	onChangeText={userPassword => this.setState({userPassword})}
-
-	/>
-
-
-	<TouchableOpacity
-	onPress={this.login}
-	style={{width:200,padding:10,backgroundColor:'magenta',alignItems:'center'}}>
-	<Text style={{color:'white'}}>Login</Text>
-	</TouchableOpacity>
-
-
-     </View>
-
-   );
-  }*/
-    render() {
-        StatusBar.setBarStyle('light-content', true);
-    if(Platform.OS === 'android') {
-            StatusBar.setBackgroundColor('transparent',true);
-            StatusBar.setTranslucent(true);
-    }
-        var temp = [
-        {
-        "path": "Android",
-        "name": "Android",
-        "checked": true
+	componentDidMount() {
+    this.watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
       },
-    ]
-    var leftText = temp.name;
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
+    );
+  }
 
-    const imageUri = "https://antiqueruby.aliansoftware.net/Images/signin/image_bg_signin_eight.jpg";
-    let logo13 = { uri: 'https://putitashd.000webhostapp.com/conex/apolys-01-01.png' };
-        return (
-            <Container>
-                <ImageBackground style={styles.imgContainer} source={{uri:imageUri}}>
-                    <Header style={styles.header}>
-                        <Left style={styles.left}>
-                            <TouchableOpacity style={styles.backArrow} onPress={()=>this.props.navigation.navigate('Home')}>
-                                <FontAwesome name={I18nManager.isRTL ? "angle-right" : "angle-left"} size={30} color="#fff"/>
-                            </TouchableOpacity>
-                        </Left>
-                        <Body style={styles.body}>
-                            <Text style={styles.textTitle}></Text>
-                        </Body>
-                        <Right style={styles.right}/>
-                    </Header>
-                    <View>
-            <Image source={logo13} style={styles.logostyle}/>
-                        <View style={styles.inputFieldSec}>
-              <Item underline style={styles.itememail}>
-                <Input placeholderTextColor='#929597' textAlign={I18nManager.isRTL ? 'right' : 'left'} placeholder='Correo' keyboardType="email-address" style={styles.inputemail} onChangeText={userEmail => this.setState({userEmail})} />
-              </Item>
-              <Item underline style={styles.itempassword}>
-                <Input placeholderTextColor='#929597' textAlign={I18nManager.isRTL ? 'right' : 'left'} placeholder='Contraseña' secureTextEntry={true} style={styles.inputpassword} onChangeText={userPassword => this.setState({userPassword})} />
-              </Item>
-                        </View>
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+  }
 
-                        <View style={styles.signInSec}>
-              <TouchableOpacity info style={styles.buttondialogsignup} onPress={this.login}>
-                <Text autoCapitalize="words" style={styles.buttonsignin}>Ingresar</Text>
-              </TouchableOpacity>
-                        </View>
-                        <Text style={{padding:10,margin:10,color:'red'}}>{this.state.email}</Text>
-                        <View>
-                            <TouchableOpacity onPress={()=>alert("Olvido contrase;a")}>
-                                <Text style={styles.forgotpass}>Olvido contraseña?</Text>
-                            </TouchableOpacity>
-                        </View>
+	render(){
+		const { navigate } = this.props.navigation;
+		return(
 
-                    </View>
-                </ImageBackground>
-            </Container>
-        );
-    }
+	  <View style={styles.container}>
+	  <Text style={styles.pageName} >Este es el menu donde estaran las opciones</Text>
+
+
+
+		<Text>Latitude: {this.state.latitude}</Text>
+		<Text>Longitude: {this.state.longitude}</Text>
+
+		<TouchableOpacity
+		onPress={() => navigate('Login')}
+		style={styles.btn1}>
+		<Text style={styles.btnText}>Ingresar(Sera pantalla principal, necesito que me pases el menu)</Text>
+		</TouchableOpacity>
+
+		<TouchableOpacity
+		onPress={()=> navigate('Register')}
+		style={styles.btn2}>
+		<Text style={styles.btnText}>Ver incidente</Text>
+		</TouchableOpacity>
+
+
+		<TouchableOpacity
+		onPress={()=> navigate('Eventos')}
+		style={styles.btn3}>
+		<Text style={styles.btnText}>Enviar Ubicacion</Text>
+		</TouchableOpacity>
+
+
+		<TouchableOpacity
+		onPress={()=> navigate('Upload')}
+		style={styles.btn2}>
+		<Text style={styles.btnText}>Subir incidente</Text>
+		</TouchableOpacity>
+
+
+      </View>
+		);
+	}
 }
+const styles = StyleSheet.create({
+	container:{
+		display:'flex',alignItems:'center',
+		justifyContent:'center'
+	},
+	btn1:{
+		backgroundColor:'#f04d4d',
+		padding:10,margin:10,width:'95%'
+	},
+	btn2:{
+		backgroundColor:'#0691ce',
+		padding:10,margin:10,width:'95%'
+	},
+	btn3:{
+		backgroundColor:'#8956FF',
+		padding:10,margin:10,width:'95%'
+	},
+	pageName:{
+		margin:10,fontWeight:'bold',
+		color:'#000', textAlign:'center'
+	},
+	btnText:{
+		color:'#fff',fontWeight:'bold'
+	},
+
+	display2:{
+		display:'none',
+	},
+
+});
 
 
-
-AppRegistry.registerComponent('login', () => login);
+AppRegistry.registerComponent('home', () => home);

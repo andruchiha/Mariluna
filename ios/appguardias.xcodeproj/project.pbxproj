@@ -52,7 +52,6 @@
 		2D84A7DC519F4DA78CFF3EAA /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EE13DDCAB1B4CF19EA166BC /* rubicon-icon-font.ttf */; };
 		7E7C9F1F14A841E6A8734F31 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 313089631EDD4256A4531B14 /* SimpleLineIcons.ttf */; };
 		A0E1369AEF134481AD605BF9 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5987505650A7400F9416AF6D /* Zocial.ttf */; };
-		FFF805CC1AFD4C62A6BEE67A /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C409847D41BA4E648210C7F0 /* libRNFetchBlob.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -374,8 +373,6 @@
 		2EE13DDCAB1B4CF19EA166BC /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		313089631EDD4256A4531B14 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5987505650A7400F9416AF6D /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2E3B7992C7E94CC898ADA013 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; name = "RNFetchBlob.xcodeproj"; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		C409847D41BA4E648210C7F0 /* libRNFetchBlob.a */ = {isa = PBXFileReference; name = "libRNFetchBlob.a"; path = "libRNFetchBlob.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,7 +401,6 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				9F4EBFB72CE9428094C5CECF /* libRNImagePicker.a in Frameworks */,
-				FFF805CC1AFD4C62A6BEE67A /* libRNFetchBlob.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,7 +588,6 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				1CCEFF5FE45E4896B7B2D19E /* RNImagePicker.xcodeproj */,
-				2E3B7992C7E94CC898ADA013 /* RNFetchBlob.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1258,12 +1253,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Debug;
@@ -1286,12 +1279,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Release;
@@ -1315,7 +1306,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Debug;
@@ -1338,7 +1328,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Release;
@@ -1369,12 +1358,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Debug;
@@ -1405,12 +1392,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Release;
@@ -1440,12 +1425,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Debug;
@@ -1475,12 +1458,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 				);
 			};
 			name = Release;

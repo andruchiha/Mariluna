@@ -98,6 +98,15 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.type.SFUIDisplaySemibold,
   },
 
+  textWhite2: {
+      marginTop: Metrics.HEIGHT*0.050,
+      alignSelf: 'center',
+      alignItems: 'center',
+    color: "black",
+    fontSize: Fonts.moderateScale(14),
+    fontFamily: Fonts.type.SFUIDisplaySemibold,
+  },
+
   textPolicyDescription:{
     color:Colors.darktext,
     fontSize: Fonts.moderateScale(11),

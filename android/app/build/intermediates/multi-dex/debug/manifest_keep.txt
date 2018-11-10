@@ -1,0 +1,3 @@
+# Referenced at C:\Users\ActivaUP\Desktop\app guardias - respaldo\appguardias\android\app\build\intermediates\manifests\full\debug\AndroidManifest.xml:19
+-keep class com.appguardias.MainApplication { <init>(...); }
+
