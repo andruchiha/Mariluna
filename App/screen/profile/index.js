@@ -27,7 +27,7 @@ import { AppRegistry,View,Text,StyleSheet,
 
 
 	const profileImg =
-	  "https://putitashd.000webhostapp.com/conex/0.jpg";
+	  "https://197.100.7.188/conex/0.jpg";
 
 
 export default class profile extends Component{
@@ -50,7 +50,7 @@ static navigationOptions= ({navigation}) =>({
 
 	userDetail (){
 
-		fetch('http://192.168.100.197/conex/detail.php', {
+		fetch('https://putitashd.000webhostapp.com/conex/detail.php', {
 			method: 'get',
 			header:{
 				'Accept': 'application/json',
@@ -82,7 +82,7 @@ static navigationOptions= ({navigation}) =>({
 					<Left style={styles.left}>
 						<TouchableOpacity
 							style={styles.backArrow}
-							onPress={() => this.props.navigation.navigate('Home')}
+							onPress={() => this.props.navigation.navigate("Profile")}
 						>
 							<FontAwesome
 								name={I18nManager.isRTL ? "angle-right" : "angle-left"}
@@ -113,7 +113,7 @@ static navigationOptions= ({navigation}) =>({
 
 					<TouchableOpacity
 						style={styles.connectWithFacebookBg}
-						onPress={() => this.props.navigation.navigate('Home')}
+						onPress={() => alert("CERRAR SESION")}
 					>
 						<Text style={styles.connectWithTwitterFbTxt}>
 							CERRAR SESION
@@ -127,14 +127,14 @@ static navigationOptions= ({navigation}) =>({
 					<View style={styles.dividerHorizontal} />
 					<View style={{ flexDirection: "column" }}>
 						<View style={styles.infoFieldBg}>
-							<Text style={styles.infoFieldTitleTxt}>NCombre</Text>
+							<Text style={styles.infoFieldTitleTxt}>Name</Text>
 							<Text style={styles.infoFieldDetailTxt}> {this.userDetail.name} Andres Perez {this.props.email} </Text>
 						</View>
 						<View style={styles.fieldDivider} />
 					</View>
 					<View style={{ flexDirection: "column" }}>
 						<View style={styles.infoFieldBg}>
-							<Text style={styles.infoFieldTitleTxt}>Correo</Text>
+							<Text style={styles.infoFieldTitleTxt}>Email</Text>
 							<Text style={styles.infoFieldDetailTxt}>
 								andru@gmail.com
 							</Text>
@@ -143,13 +143,13 @@ static navigationOptions= ({navigation}) =>({
 					</View>
 					<View style={{ flexDirection: "column" }}>
 						<View style={styles.infoFieldBg}>
-							<Text style={styles.infoFieldTitleTxt}>Telefono</Text>
+							<Text style={styles.infoFieldTitleTxt}>Phone</Text>
 							<Text style={styles.infoFieldDetailTxt}>+593 99 855 72 53</Text>
 						</View>
 						<View style={styles.fieldDivider} />
 					</View>
 					<View style={styles.infoFieldBg}>
-						<Text style={styles.infoFieldTitleTxt}>Direccion</Text>
+						<Text style={styles.infoFieldTitleTxt}>Address</Text>
 						<Text style={styles.infoFieldDetailTxt}>
 							1201 Quito, Real audiencia 205 Bellavista, WA 98121 ECU
 						</Text>

@@ -12,8 +12,6 @@ const options={
 };
 
 
-
-
 class InputUsers extends Component{
 
 //constructor have a state that conatains the properties that will recieve the values from Text Inputes
@@ -110,7 +108,7 @@ formData.append('iamgeSource', {
 });
 
 //API that use fetch to input data to database via backend php script
-fetch('http://192.168.0.16/conex/insert.php',{
+fetch('http://192.168.100.197/conex/insert.php',{
     method: 'POST',
     headers: {
         'Accept': 'application/json',
@@ -130,8 +128,6 @@ fetch('http://192.168.0.16/conex/insert.php',{
 
 //alert('Pressed!!');
 }
-
-
 
 
     render(){
